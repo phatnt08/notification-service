@@ -5,6 +5,18 @@ spring:
     mongodb:
       uri: ${DB_URL:mongodb://root:root@localhost:27017/notification-service?authSource=admin}
 
+  kafka:
+    properties:
+      retries: 5
+      request.timeout.ms: 30000
+      retry.backoff.ms: 10000
+    bootstrap-servers: localhost:9192,localhost:9193
+    consumer:
+      group-id: notification-group
+      auto-offset-reset: earliest
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
 server:
   port: ${SERVER_PORT:8083}
   servlet:
